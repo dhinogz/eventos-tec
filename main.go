@@ -1,22 +1,46 @@
 package main
 
 import (
-	"fmt"
 	"log"
-	"net/http"
+	"log/slog"
+	"os"
+
+	"github.com/dhinogz/eventos-tec/server"
+	"github.com/joho/godotenv"
 )
 
 func main() {
-	mux := http.NewServeMux()
-	mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		fmt.Fprint(w, "<h1>Hello, eventos-tec!</h1>")
-	})
-	port := ":42069"
+	// ctx := context.Background()
 
-	srv := http.Server{
-		Addr:    port,
-		Handler: mux,
+	logger := slog.New(slog.NewJSONHandler(os.Stdout, nil))
+
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatal(err)
 	}
 
-	log.Fatal(srv.ListenAndServe())
+	port := os.Getenv("PORT")
+	// dbUrl := os.Getenv("EVENTS_DB_URL")
+
+	// conn, err := pgx.Connect(ctx, dbUrl)
+	// if err != nil {
+	// 	log.Fatalf("unable to connect to database: %v\n", err)
+	// }
+	// defer conn.Close(context.Background())
+	//
+	// ctx, cancel := context.WithTimeout(ctx, time.Duration(time.Second*2))
+	// if err := conn.Ping(ctx); err != nil {
+	// 	logger.Error("could not ping db", "err", err, "db", dbUrl)
+	// }
+	// defer cancel()
+	//
+	// q := db.New(conn)
+
+	svr := server.New(
+		server.WithLogger(logger),
+		server.WithPort(port),
+		// server.WithStore(q),
+	)
+
+	log.Fatal(svr.Start())
 }

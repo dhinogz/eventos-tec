@@ -1,0 +1,67 @@
+package ui
+
+var (
+	title = "home"
+)
+
+templ Home() {
+	@Base("Eventos Tec") {
+		@Hero()
+		@Features()
+		@HowItWorks()
+	}
+}
+
+templ Hero() {
+	<div class="bg-white pt-20 pb-32">
+		<div class="container mx-auto px-4">
+			<div class="max-w-3xl mx-auto text-center">
+				<h1 class="text-5xl md:text-6xl font-bold mb-6 text-gray-900">Manage Your Events Seamlessly</h1>
+				<p class="text-xl md:text-2xl mb-10 text-gray-600">Create, promote, and manage events effortlessly with our platform.</p>
+				<a href="/create-event" class="bg-black text-white py-3 px-8 rounded-full text-lg font-semibold hover:bg-gray-800 transition duration-300">
+					Create an Event
+				</a>
+			</div>
+		</div>
+	</div>
+}
+
+templ Features() {
+	<div class="bg-gray-100 py-20">
+		<div class="container mx-auto px-4">
+			<div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+				@FeatureCard("Create Easily", "Set up your event in minutes with our user-friendly interface")
+				@FeatureCard("Promote Effectively", "Reach your audience with built-in promotional tools")
+				@FeatureCard("Track and Manage", "Monitor registrations, send reminders, and more in one place")
+			</div>
+		</div>
+	</div>
+}
+
+templ FeatureCard(title string, description string) {
+	<div class="text-center">
+		<h3 class="text-2xl font-semibold mb-3 text-gray-900">{ title }</h3>
+		<p class="text-gray-600">{ description }</p>
+	</div>
+}
+
+templ HowItWorks() {
+	<div class="bg-white py-20">
+		<div class="container mx-auto px-4">
+			<h2 class="text-3xl md:text-4xl font-bold text-center mb-12 text-gray-900">How it Works</h2>
+			<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+				@StepCard("1", "Create Your Event", "Fill out the details and publish it live")
+				@StepCard("2", "Promote Your Event", "Share the event link or use our promotion tools")
+				@StepCard("3", "Track Attendance", "View registrations, check-ins, and feedback in real-time")
+			</div>
+		</div>
+	</div>
+}
+
+templ StepCard(number string, title string, description string) {
+	<div class="text-center">
+		<div class="w-12 h-12 bg-black text-white rounded-full flex items-center justify-center mx-auto mb-4 text-xl font-bold">{ number }</div>
+		<h3 class="text-xl font-semibold mb-2 text-gray-900">{ title }</h3>
+		<p class="text-gray-600">{ description }</p>
+	</div>
+}

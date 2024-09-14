@@ -1,0 +1,17 @@
+package ui 
+
+type Event struct {
+	Name    string
+	Details string
+}
+
+templ EventListPage(events []Event) {
+	@Base("Event List") {
+		<div class="container bg-white-300">
+			for _, e := range events {
+				<h1>{ e.Name }</h1>
+				<p>{ e.Details } </p>
+			}
+		</div>
+	}
+}

@@ -1,0 +1,31 @@
+package ui
+
+templ Header(title string) {
+	<head>
+		<meta charset="UTF-8"/>
+		<title>{ title }</title>
+		<!-- Metadata -->
+		<link rel="icon" type="image/svg+xml" href="/static/favicon.svg"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1"/>
+		<meta name="robots" content="index, follow"/>
+		<meta name="revisit-after" content="7 days"/>
+		<meta name="language" content="English"/>
+		<!-- Static -->
+		<link rel="icon" type="image/x-icon" href="/static/favicon.svg"/>
+		<link rel="stylesheet" href="/static/styles.min.css"/>
+		<script src="/static/htmx.min.js"></script>
+		<script src="/static/_hyperscript.min.js"></script>
+		<script src="https://unpkg.com/htmx.org@1.9.12/dist/ext/sse.js"></script>
+		<script defer src="https://blog.umami.davhinojosa.com/script.js" data-website-id="12897fc4-13f8-4290-ad92-08faa0d3293d"></script>
+	</head>
+}
+
+templ Base(title string) {
+	<!DOCTYPE html>
+	<html lang="en">
+		@Header(title)
+		<body class="flex flex-col h-screen">
+			{ children... }
+		</body>
+	</html>
+}

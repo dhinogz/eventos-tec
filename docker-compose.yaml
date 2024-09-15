@@ -1,0 +1,31 @@
+services:
+  db-psql:
+    image: postgres
+    container_name: ${APP_NAME}-psql
+    restart: always
+    environment:
+      POSTGRES_USER: ${PSQL_USER}
+      POSTGRES_PASSWORD: ${PSQL_PASSWORD}
+      POSTGRES_DB: ${PSQL_DATABASE}
+    ports:
+      - ${PSQL_PORT}:5432
+    networks:
+      - main
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  adminer:
+    image: adminer
+    restart: always
+    networks:
+      - main
+    environment:
+      ADMINER_DESIGN: dracula
+    ports:
+      - 3333:8080
+
+networks:
+  main:
+
+volumes:
+  postgres_data:

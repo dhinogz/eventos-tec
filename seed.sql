@@ -37,3 +37,43 @@ INSERT INTO events (organization_id, title, description, capacity, date, duratio
 (1, 'Business Pitch Contest 30', 'Pitch your business ideas to industry experts', 120, '2024-06-10 14:00:00', 180, 'Innovation Hall', FALSE, '', TRUE);
 
 -- Add similar rows up to a total of 1000 entries.
+
+-- SQL script to manually insert event reports that make sense with event capacities
+
+INSERT INTO event_reports (event_id, attendance_count, mean_reviews, active) VALUES
+(1, 120, 4.5, TRUE), -- Campus Talk 1, slightly less than max capacity
+(2, 180, 4.2, TRUE), -- Networking Session 2, near max capacity
+(3, 250, 4.8, TRUE), -- Sports Meet 3, a bit less than max capacity
+(4, 450, 4.0, TRUE), -- Cultural Fest 4, a bit less than max capacity
+(5, 90, 4.3, TRUE), -- Workshop 5, near max capacity
+(6, 100, 4.6, TRUE), -- Art Exhibition 6, close to max capacity
+(7, 150, 3.9, TRUE), -- Alumni Meet 7, near max capacity
+(8, 350, 4.1, TRUE), -- Career Fair 8, a bit less than max capacity
+(9, 320, 4.7, TRUE), -- Music Concert 9, close to max capacity
+(10, 180, 4.9, TRUE), -- Hackathon 10, near max capacity
+
+-- Additional manual inserts with hypothetical event_ids and made-up data
+(11, 200, 4.4, TRUE),
+(12, 160, 3.8, TRUE),
+(13, 70, 4.2, TRUE),
+(14, 25, 4.5, TRUE),
+(15, 550, 4.1, TRUE),
+(16, 230, 4.3, TRUE),
+(17, 90, 4.6, TRUE),
+(18, 45, 4.7, TRUE),
+(19, 55, 4.0, TRUE),
+(20, 200, 3.5, TRUE),
+
+-- Continue the pattern for other events
+(21, 450, 4.4, TRUE),
+(22, 70, 4.9, TRUE),
+(23, 110, 4.3, TRUE),
+(24, 550, 4.2, TRUE),
+(25, 45, 4.8, TRUE),
+(26, 95, 4.1, TRUE),
+(27, 180, 3.9, TRUE),
+(28, 75, 4.6, TRUE),
+(29, 45, 4.4, TRUE),
+(30, 110, 4.0, TRUE);
+
+-- Repeat for all other event IDs if needed

@@ -1,6 +1,7 @@
 package server
 
 import (
+	"encoding/json"
 	"fmt"
 	"net/http"
 	"strconv"
@@ -40,4 +41,21 @@ func (s *Server) handleEventReports(w http.ResponseWriter, r *http.Request) {
 
 	fmt.Fprintf(w, "%d %d %f", eventID, attendance, reviewScore)
 
+}
+
+func (s *Server) handleEventData(w http.ResponseWriter, r *http.Request) {
+	events, err := s.store.GetEventsReport(r.Context())
+	if err != nil {
+		s.logger.Error("failed to get events report", "err", err)
+		http.Error(w, "could not retrieve events", http.StatusInternalServerError)
+		return
+	}
+
+	// Convert the events to JSON
+	w.Header().Set("Content-Type", "application/json")
+	err = json.NewEncoder(w).Encode(events)
+	if err != nil {
+		s.logger.Error("failed to encode events to json", "err", err)
+		http.Error(w, "could not encode events", http.StatusInternalServerError)
+	}
 }

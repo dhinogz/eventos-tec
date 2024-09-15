@@ -34,6 +34,7 @@ func (s *Server) routes() *chi.Mux {
 			// r.Post("/", s.handleNewEvent)
 			r.Get("/report", s.handleEventReports)
 		})
+		r.Get("/data", s.handleEventData)
 	})
 
 	return r

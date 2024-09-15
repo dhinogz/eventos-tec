@@ -195,7 +195,7 @@ func (s *Server) routes() *chi.Mux {
 				MeetingLink:    "",
 			},
 		}
-		ui.Render(r.Context(), w, http.StatusOK, ui.EventListPage("Upcoming Events", events))
+		ui.Render(r.Context(), w, http.StatusOK, ui.EventListPage(events))
 	})
 
 	r.Get("/events/{eventID}/report", s.handleEventReports)

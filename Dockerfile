@@ -32,7 +32,7 @@ RUN go generate ./...
 
 # Build binary
 ENV CGO_ENABLED=0
-RUN go build ./cmd/web -o web 
+RUN go build . -o web
 
 # 2. Serve step
 FROM debian:12-slim

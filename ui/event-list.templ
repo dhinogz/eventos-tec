@@ -16,30 +16,44 @@ templ EventListPage(events []db.GetAllEventsRow) {
 	@Base("Event List") {
 		<div class="container mx-auto p-6 bg-gray-100">
 			<h1 class="text-3xl font-bold text-gray-800 mb-6">Upcoming Events</h1>
-			for _, e := range events {
-				<a href={ templ.URL(fmt.Sprintf("/events/%d", e.ID)) }>
-					<div class="bg-white shadow-md rounded-lg p-6 mb-6">
-						<h2 class="text-2xl font-semibold text-gray-800 mb-2">{ e.Title }</h2>
-						<div class="flex items-center mb-4">
-							<span class="text-gray-600 mr-2">Date:</span>
-							<span class="font-medium">{ FormatDate(e.Date) }</span>
-						</div>
-						<div class="flex items-center mb-4">
-							<span class="text-gray-600 mr-2">Capacity:</span>
-							<span class="font-medium">{ strconv.FormatInt(e.Capacity, 10) }</span>
-						</div>
-						<div class="flex items-center mb-4">
-							<span class="text-gray-600 mr-2">Location:</span>
-							<span class="font-medium">{ e.Venue }</span>
-						</div>
-						if e.IsOnline {
-							<a href="{ e.MeetingLink }" class="text-blue-500 hover:underline">Join Online</a>
-						} else {
-							<span class="text-gray-500">In-person event</span>
-						}
+			<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+				for _, e := range events {
+					<div class="h-full">
+						<a href={ templ.URL(fmt.Sprintf("/events/%d", e.ID)) } class="block h-full">
+							@EventCard(e)
+						</a>
 					</div>
-				</a>
-			}
+				}
+			</div>
 		</div>
 	}
+}
+
+templ EventCard(e db.GetAllEventsRow) {
+	<div class="bg-white shadow-md rounded-lg p-6 h-full flex flex-col">
+		<h2 class="text-2xl font-semibold text-gray-800 mb-2">{ e.Title }</h2>
+		<div class="flex items-center mb-2">
+			<span class="text-gray-600 mr-2">Date:</span>
+			<span class="font-medium">{ FormatDate(e.Date) }</span>
+		</div>
+		<div class="flex items-center mb-2">
+			<span class="text-gray-600 mr-2">Capacity:</span>
+			<span class="font-medium">{ strconv.FormatInt(e.Capacity, 10) }</span>
+		</div>
+		<div class="flex items-center mb-2">
+			<span class="text-gray-600 mr-2">Location:</span>
+			<span class="font-medium">{ e.Venue }</span>
+		</div>
+		<div class="flex-grow"></div>
+		<div class="flex justify-between items-end mt-4">
+			if e.IsOnline {
+				<a href="{ e.MeetingLink }" class="text-blue-500 hover:underline">Join Online</a>
+			} else {
+				<span class="text-gray-500">In-person event</span>
+			}
+			<button class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded">
+				Register
+			</button>
+		</div>
+	</div>
 }

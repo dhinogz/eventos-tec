@@ -13,33 +13,48 @@ type Event struct {
 	MeetingLink    string
 }
 
-templ EventListPage(events []Event) {
-	@Base("Event List") {
+templ EventCard(e Event) {
+	<div class="bg-white shadow-md rounded-lg p-6 mb-6">
+	    <h2 class="text-2xl font-semibold text-gray-800 mb-2">{ e.Title }</h2>
+	    <p class="text-gray-600 mb-4">{ e.Description }</p>
+	    <div class="flex items-center mb-4">
+	        <span class="text-gray-600 mr-2">Date:</span>
+	        <span class="font-medium">{ e.Date }</span>
+	    </div>
+	    <div class="flex items-center mb-4">
+	        <span class="text-gray-600 mr-2">Capacity:</span>
+	        <span class="font-medium">{ e.Capacity }</span>
+	    </div>
+	    <div class="flex items-center mb-4">
+	        <span class="text-gray-600 mr-2">Location:</span>
+	        <span class="font-medium">{ e.Venue }</span>
+	    </div>
+	    if e.IsOnline {
+	        <a href="{ e.MeetingLink }" class="text-blue-500 hover:underline">Join Online</a>
+	    } else {
+	        <span class="text-gray-500">In-person event</span>
+	    }
+	</div>
+}
+
+templ EventListPage(title string, events []Event) {
+	@Base(title) {
 		<div class="container mx-auto p-6 bg-gray-100">
-			<h1 class="text-3xl font-bold text-gray-800 mb-6">Upcoming Events</h1>
-			for _, e := range events {
-				<div class="bg-white shadow-md rounded-lg p-6 mb-6">
-					<h2 class="text-2xl font-semibold text-gray-800 mb-2">{ e.Title }</h2>
-					<p class="text-gray-600 mb-4">{ e.Description }</p>
-					<div class="flex items-center mb-4">
-						<span class="text-gray-600 mr-2">Date:</span>
-						<span class="font-medium">{ e.Date }</span>
-					</div>
-					<div class="flex items-center mb-4">
-						<span class="text-gray-600 mr-2">Capacity:</span>
-						<span class="font-medium">{ e.Capacity }</span>
-					</div>
-					<div class="flex items-center mb-4">
-						<span class="text-gray-600 mr-2">Location:</span>
-						<span class="font-medium">{ e.Venue }</span>
-					</div>
-					if e.IsOnline {
-						<a href="{ e.MeetingLink }" class="text-blue-500 hover:underline">Join Online</a>
-					} else {
-						<span class="text-gray-500">In-person event</span>
-					}
-				</div>
-			}
+		    <h1 class="text-3xl font-bold text-gray-800 mb-6">Upcoming Events</h1>
+
+		    <!-- Carousel placeholder -->
+		    <div class="flex overflow-x-scroll pb-10 hide-scroll-bar">
+		        <div class="flex flex-nowrap lg:ml-40 md:ml-20 ml-10">
+		            for _, e := range events {
+		                @EventCard(e)
+		            }
+		        </div>
+		    </div>
+
+		    <!-- Listing all events using EventCard component -->
+		    for _, e := range events {
+		        @EventCard(e)
+		    }
 		</div>
 	}
 }

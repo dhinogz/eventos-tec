@@ -19,9 +19,11 @@ func main() {
 
 	logger := slog.New(slog.NewJSONHandler(os.Stdout, nil))
 
-	err := godotenv.Load()
-	if err != nil {
-		log.Fatal(err)
+	environemt := os.Getenv("APP_ENV")
+	if environemt == "dev" {
+		if err := godotenv.Load(); err != nil {
+			log.Fatal(err)
+		}
 	}
 
 	port := os.Getenv("PORT")

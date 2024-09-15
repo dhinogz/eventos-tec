@@ -9,7 +9,7 @@ FROM events e
 JOIN organization o ON o.id = e.organization_id
 WHERE e.id = $1 AND e.active = true;
 
--- name: InsertEvent :exec
+-- name: InsertEvent :one
 INSERT INTO events (
     organization_id,
     title,
@@ -30,4 +30,5 @@ INSERT INTO events (
     $7,  -- venue
     $8,  -- is_online
     $9   -- meeting_link
-);
+)
+RETURNING id;

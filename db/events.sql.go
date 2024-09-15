@@ -89,7 +89,7 @@ func (q *Queries) GetEventDetails(ctx context.Context, id int64) (GetEventDetail
 	return i, err
 }
 
-const insertEvent = `-- name: InsertEvent :exec
+const insertEvent = `-- name: InsertEvent :one
 INSERT INTO events (
     organization_id,
     title,
@@ -111,6 +111,7 @@ INSERT INTO events (
     $8,  -- is_online
     $9   -- meeting_link
 )
+RETURNING id
 `
 
 type InsertEventParams struct {
@@ -125,8 +126,8 @@ type InsertEventParams struct {
 	MeetingLink    string
 }
 
-func (q *Queries) InsertEvent(ctx context.Context, arg InsertEventParams) error {
-	_, err := q.db.Exec(ctx, insertEvent,
+func (q *Queries) InsertEvent(ctx context.Context, arg InsertEventParams) (int64, error) {
+	row := q.db.QueryRow(ctx, insertEvent,
 		arg.OrganizationID,
 		arg.Title,
 		arg.Description,
@@ -137,5 +138,7 @@ func (q *Queries) InsertEvent(ctx context.Context, arg InsertEventParams) error 
 		arg.IsOnline,
 		arg.MeetingLink,
 	)
-	return err
+	var id int64
+	err := row.Scan(&id)
+	return id, err
 }

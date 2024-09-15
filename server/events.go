@@ -79,16 +79,15 @@ func (s *Server) handleNewEvent(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Insert the event
-	err = s.store.InsertEvent(r.Context(), params)
+	id, err := s.store.InsertEvent(r.Context(), params)
 	if err != nil {
 		http.Error(w, "Failed to insert event", http.StatusInternalServerError)
 		return
 	}
 
-	// Respond with success
-	w.WriteHeader(http.StatusCreated)
-	w.Write([]byte("Event created successfully"))
-
+	newEvent := fmt.Sprintf("/events/%d", id)
+	w.Header().Set("HX-Redirect", newEvent)
+	w.WriteHeader(http.StatusTemporaryRedirect)
 }
 
 func (s *Server) handleEventDetails(w http.ResponseWriter, r *http.Request) {

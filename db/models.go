@@ -23,7 +23,7 @@ type Event struct {
 	Capacity       int64
 	Date           pgtype.Timestamp
 	Duration       int64
-	LocationID     int64
+	Venue          string
 	IsOnline       bool
 	MeetingLink    string
 	CreatedAt      pgtype.Timestamptz
@@ -69,13 +69,6 @@ type Interest struct {
 	CategoryID int64
 	CreatedAt  pgtype.Timestamptz
 	Active     bool
-}
-
-type Location struct {
-	ID        int64
-	Venue     string
-	CreatedAt pgtype.Timestamptz
-	Active    bool
 }
 
 type Organization struct {

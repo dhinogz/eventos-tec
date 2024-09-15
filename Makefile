@@ -2,14 +2,25 @@ include .env
 
 PSQL_DSN = "postgres://${PSQL_USER}:${PSQL_PASSWORD}@${PSQL_HOST}:${PSQL_PORT}/${PSQL_DATABASE}?sslmode=${PSQL_SSLMODE}"
 
-templ-gen:
+deps: # Installs templ and and npm dependencies
+	go install github.com/a-h/templ/cmd/templ@latest
+	go install github.com/pressly/goose/v3/cmd/goose@latest
+	npm install
+
+templ: # Generate templ files
 	templ generate
 
-build:
+assets: # Generate CSS based on templ files
+	npx tailwindcss -m -i ./assets/tailwind.css -o ./assets/dist/styles.min.css
+
+embed: templ assets # Embed generated assets
+	go generate ./...
+
+build: embed
 	go build -o ./bin/web .
 
-run: templ-gen
-	go run .
+run: build
+	./bin/web
 
 db-up:
 	docker compose up -d --build
@@ -30,6 +41,9 @@ db-gen:
 
 db-psql:
 	psql $(PSQL_DSN)
+
+db-seed:
+	psql $(PSQL_DSN) -f seed.sql
 
 db-dump:
 	pg_dump $(PSQL_DSN) > seed.sql

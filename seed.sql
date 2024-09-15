@@ -1,5 +1,8 @@
 -- SQL script to manually insert 1000 events with random data and venue field
 
+INSERT INTO organization (name, description) VALUES
+('Tecnologico de Monterrey', 'El Tecnológico de Monterrey (Tec de Monterrey) es una de las instituciones educativas más prestigiosas de México y América Latina, reconocida por su enfoque en la innovación, el emprendimiento y la excelencia académica. Fundada en 1943 en la ciudad de Monterrey, Nuevo León, por un grupo de empresarios liderados por Eugenio Garza Sada, su misión es formar líderes con un sentido ético, una visión global y un espíritu emprendedor.')
+
 INSERT INTO events (organization_id, title, description, capacity, date, duration, venue, is_online, meeting_link, active) VALUES
 (1, 'Campus Talk 1', 'A seminar on academic life', 150, '2024-01-12 09:00:00', 90, 'Main Auditorium', FALSE, '', TRUE),
 (1, 'Networking Session 2', 'An event to connect students and faculty', 200, '2024-01-15 14:00:00', 120, 'Student Center Hall', FALSE, '', TRUE),

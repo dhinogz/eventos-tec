@@ -70,3 +70,16 @@ db-restart:
 	@echo "Migrating PostgreSQL schemas..."
 	@goose -dir="./sql/schemas" postgres $(PSQL_DSN) up
 
+# Live mode
+.PHONY: live/wgo
+live/wgo:
+	wgo -file .go -xfile=_templ.go go run main.go serve :: \
+	wgo -file .css templ generate --notify-proxy
+
+.PHONY: live/proxy
+live/proxy:
+	templ generate --watch --proxy="http://127.0.0.1:42069" --open-browser=false
+
+.PHONY: live
+live:
+	$(MAKE) --no-print-directory -j3 live/proxy live/wgo

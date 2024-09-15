@@ -27,6 +27,7 @@ func (s *Server) routes() *chi.Mux {
 
 	r.Route("/events", func(r chi.Router) {
 		r.Get("/", s.handleEventList)
+		r.Post("/", s.handleNewEvent)
 		r.Get("/new", s.handleEventForm)
 		r.Route("/{eventID}", func(r chi.Router) {
 			r.Get("/", s.handleEventDetails)

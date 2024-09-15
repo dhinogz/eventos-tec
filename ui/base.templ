@@ -20,18 +20,28 @@ templ Header(title string) {
 	</head>
 }
 
+templ UserSVG() {
+	<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+		<path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z"></path>
+	</svg>
+}
+
+templ TecLogo() {
+	<img src="/static/tec-logo.svg" class="h-12 w-12 mr-4"/>
+}
+
 templ NavBar() {
 	<div class="bg-blue-500 text-white py-4">
 		<div class="container mx-auto flex items-center justify-between">
 			<a href="/events">
 				<div class="flex items-center">
-					<img src="/img/logo-tec.png" alt="Logo Tec" class="h-12 w-12 mr-4"/>
-					<h1 class="text-4xl font-bold">Eventos Tec</h1>
+					@TecLogo()
+					<h1 class="text-4xl font-bold">Eventos</h1>
 				</div>
 			</a>
 			<div>
-				<a href="#" class="flex items-center justify-center bg-transparent hover:bg-white text-white font-semibold hover:text-blue-500 py-2 px-4 border border-white hover:border-transparent rounded">
-					<img src="/img/user-logo.png" alt="User Logo" class="h-10 w-10"/>
+				<a href="#" class="flex items-center justify-center bg-transparent hover:bg-white text-white font-semibold hover:text-blue-500 py-2 px-4 rounded">
+					@UserSVG()
 				</a>
 			</div>
 		</div>

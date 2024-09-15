@@ -94,5 +94,7 @@ func (s *Server) routes() *chi.Mux {
 		ui.Render(r.Context(), w, http.StatusOK, ui.EventListPage(e))
 	})
 
+	r.Get("/events/{eventID}/report", s.handleEventReports)
+
 	return r
 }

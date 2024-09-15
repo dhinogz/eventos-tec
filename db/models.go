@@ -47,6 +47,14 @@ type EventRegister struct {
 	Active    bool
 }
 
+type EventReport struct {
+	EventID         int64
+	AttendanceCount int32
+	MeanReviews     float64
+	CreatedAt       pgtype.Timestamptz
+	Active          bool
+}
+
 type Favorite struct {
 	ID        int64
 	UserID    int64

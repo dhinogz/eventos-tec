@@ -135,5 +135,4 @@ ALTER TABLE reviews ADD CONSTRAINT reviews_author_id_fkey FOREIGN KEY (author_id
 
 -- +goose Down
 DROP TABLE users;
-DROP TABLE user_roles;
 DROP TABLE sessions;

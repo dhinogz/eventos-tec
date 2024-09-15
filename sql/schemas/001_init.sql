@@ -45,7 +45,7 @@ CREATE TABLE events (
     capacity BIGINT NOT NULL,
     date TIMESTAMP NOT NULL,
     duration BIGINT NOT NULL,
-    location_id BIGINT NOT NULL,
+    venue TEXT NOT NULL,
     is_online BOOLEAN NOT NULL,
     meeting_link TEXT NOT NULL,
 
@@ -110,14 +110,6 @@ CREATE TABLE reviews (
     active BOOLEAN NOT NULL DEFAULT TRUE
 );
 
-CREATE TABLE locations (
-    id BIGSERIAL PRIMARY KEY,
-    venue TEXT NOT NULL,
-
-    created_at TIMESTAMP(0) with time zone NOT NULL DEFAULT NOW(),
-    active BOOLEAN NOT NULL DEFAULT TRUE
-);
-
 ALTER TABLE sessions ADD CONSTRAINT sessions_user_id_fkey FOREIGN KEY (user_id) REFERENCES users(id);
 ALTER TABLE favorites ADD CONSTRAINT favorites_event_id_fkey FOREIGN KEY (event_id) REFERENCES events(id);
 ALTER TABLE interests ADD CONSTRAINT interests_user_id_fkey FOREIGN KEY (user_id) REFERENCES users(id);
@@ -126,7 +118,6 @@ ALTER TABLE event_categories ADD CONSTRAINT event_categories_event_id_fkey FOREI
 ALTER TABLE interests ADD CONSTRAINT interests_category_id_fkey FOREIGN KEY (category_id) REFERENCES categories(id);
 ALTER TABLE event_registers ADD CONSTRAINT event_registers_user_id_fkey FOREIGN KEY (user_id) REFERENCES users(id);
 ALTER TABLE event_registers ADD CONSTRAINT event_registers_event_id_fkey FOREIGN KEY (event_id) REFERENCES events(id);
-ALTER TABLE events ADD CONSTRAINT events_location_id_fkey FOREIGN KEY (location_id) REFERENCES locations(id);
 ALTER TABLE reviews ADD CONSTRAINT reviews_event_id_fkey FOREIGN KEY (event_id) REFERENCES events(id);
 ALTER TABLE favorites ADD CONSTRAINT favorites_user_id_fkey FOREIGN KEY (user_id) REFERENCES users(id);
 ALTER TABLE organization_users ADD CONSTRAINT organization_users_organization_id_fkey FOREIGN KEY (organization_id) REFERENCES organization(id);

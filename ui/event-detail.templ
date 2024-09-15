@@ -1,9 +1,60 @@
 package ui
 
 import "github.com/dhinogz/eventos-tec/db"
+import "strconv"
 
-templ EventDetailPage(e db.Event) {
+templ EventDetailPage(e db.GetEventDetailsRow) {
 	@Base(e.Title) {
-		Hello { e.Title }
+		<div class="container mx-auto px-4 py-8">
+			@EventHeader(e.Title)
+			<div class="bg-white shadow-md rounded-lg p-6">
+				<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+					@EventInfo(e)
+					@EventDescription(e.Description)
+				</div>
+				@RegisterButton()
+			</div>
+		</div>
 	}
+}
+
+templ EventHeader(title string) {
+	<h1 class="text-3xl font-bold mb-4">{ title }</h1>
+}
+
+templ EventInfo(e db.GetEventDetailsRow) {
+	<div>
+		<h2 class="text-xl font-semibold mb-2">Event Details</h2>
+		@InfoItem("Organizer", e.OrganizationName)
+		if e.IsOnline {
+			@InfoItem("Venue", e.Venue)
+		} else {
+			@InfoItem("Venue", "Online Event")
+		}
+		@InfoItem("Capacity", strconv.FormatInt(e.Capacity, 10)+" attendees")
+		if e.IsOnline {
+			<p class="text-green-600 font-semibold">This is an online event</p>
+		}
+	</div>
+}
+
+templ InfoItem(label string, value string) {
+	<p class="text-gray-700 mb-2">
+		<span class="font-semibold">{ label }:</span> { value }
+	</p>
+}
+
+templ EventDescription(description string) {
+	<div>
+		<h2 class="text-xl font-semibold mb-2">Description</h2>
+		<p class="text-gray-700">{ description }</p>
+	</div>
+}
+
+templ RegisterButton() {
+	<div class="mt-6">
+		<a href="#" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+			Register for Event
+		</a>
+	</div>
 }

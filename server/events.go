@@ -2,18 +2,19 @@ package server
 
 import (
 	"fmt"
+	"log/slog"
 	"net/http"
 	"strconv"
 	"time"
 
 	"github.com/dhinogz/eventos-tec/db"
 	"github.com/dhinogz/eventos-tec/ui"
+	"github.com/go-chi/chi/v5"
 	"github.com/jackc/pgx/v5/pgtype"
 )
 
 func (s *Server) handleEventList(w http.ResponseWriter, r *http.Request) {
 	events, err := s.store.GetAllEvents(r.Context())
-	fmt.Printf("%+v", events)
 
 	err = ui.Render(r.Context(), w, http.StatusOK, ui.EventListPage(events))
 	if err != nil {
@@ -91,21 +92,18 @@ func (s *Server) handleNewEvent(w http.ResponseWriter, r *http.Request) {
 }
 
 func (s *Server) handleEventDetails(w http.ResponseWriter, r *http.Request) {
-	// event := ui.Event{
-	// 	ID:             3,
-	// 	OrganizationID: 103,
-	// 	Title:          "Marketing Summit 2024",
-	// 	Description:    "A summit bringing together top marketing experts to share insights and strategies.",
-	// 	Capacity:       "300",
-	// 	Date:           "2024-11-05T10:00:00Z",
-	// 	Duration:       240,
-	// 	Venue:          "Grand Hotel, City Center",
-	// 	IsOnline:       false,
-	// 	MeetingLink:    "",
-	// }
-	// err := ui.Render(r.Context(), w, http.StatusOK, ui.EventDetailPage(event))
-	// if err != nil {
-	// 	s.logger.Error("event list render", "err", err)
-	// 	fmt.Fprint(w, "could not render")
-	// }
+	eventID, err := strconv.ParseInt(chi.URLParam(r, "eventID"), 10, 64)
+	if err != nil {
+		slog.Error("parsing event id", "err", err)
+		return
+	}
+
+	event, err := s.store.GetEventDetails(r.Context(), eventID)
+
+	err = ui.Render(r.Context(), w, http.StatusOK, ui.EventDetailPage(event))
+	if err != nil {
+		s.logger.Error("event list render", "err", err)
+		fmt.Fprint(w, "could not render")
+		return
+	}
 }

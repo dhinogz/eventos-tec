@@ -27,9 +27,9 @@ templ EventInfo(e db.GetEventDetailsRow) {
 		<h2 class="text-xl font-semibold mb-2">Event Details</h2>
 		@InfoItem("Organizer", e.OrganizationName)
 		if e.IsOnline {
-			@InfoItem("Venue", e.Venue)
-		} else {
 			@InfoItem("Venue", "Online Event")
+		} else {
+			@InfoItem("Venue", e.Venue)
 		}
 		@InfoItem("Capacity", strconv.FormatInt(e.Capacity, 10)+" attendees")
 		if e.IsOnline {

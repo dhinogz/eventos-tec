@@ -85,13 +85,45 @@ func (s *Server) routes() *chi.Mux {
 	})
 
 	r.Get("/events", func(w http.ResponseWriter, r *http.Request) {
-		e := []ui.Event{
+		events := []ui.Event{
 			{
-				Name:    "Title",
-				Details: "Details",
+				ID:             1,
+				OrganizationID: 101,
+				Title:          "Tech Conference 2024",
+				Description:    "A conference focusing on the latest in technology and innovation.",
+				Capacity:       "500",
+				Date:           "2024-10-15T09:00:00Z",
+				Duration:       180,
+				Venue:          "Tech Center, Downtown",
+				IsOnline:       false,
+				MeetingLink:    "",
+			},
+			{
+				ID:             2,
+				OrganizationID: 102,
+				Title:          "Online Workshop: AI Trends",
+				Description:    "An online workshop discussing the latest trends in Artificial Intelligence.",
+				Capacity:       "100",
+				Date:           "2024-10-22T14:00:00Z",
+				Duration:       120,
+				Venue:          "",
+				IsOnline:       true,
+				MeetingLink:    "https://example.com/ai-trends",
+			},
+			{
+				ID:             3,
+				OrganizationID: 103,
+				Title:          "Marketing Summit 2024",
+				Description:    "A summit bringing together top marketing experts to share insights and strategies.",
+				Capacity:       "300",
+				Date:           "2024-11-05T10:00:00Z",
+				Duration:       240,
+				Venue:          "Grand Hotel, City Center",
+				IsOnline:       false,
+				MeetingLink:    "",
 			},
 		}
-		ui.Render(r.Context(), w, http.StatusOK, ui.EventListPage(e))
+		ui.Render(r.Context(), w, http.StatusOK, ui.EventListPage(events))
 	})
 
 	r.Get("/events/{eventID}/report", s.handleEventReports)

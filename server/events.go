@@ -60,8 +60,6 @@ func (s *Server) handleNewEvent(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	isOnline := r.FormValue("is_online") == "on"
-
 	// Create the InsertEventParams struct
 	params := db.InsertEventParams{
 		OrganizationID: organizationID,
@@ -74,8 +72,8 @@ func (s *Server) handleNewEvent(w http.ResponseWriter, r *http.Request) {
 		},
 		Duration:    duration,
 		Venue:       r.FormValue("venue"),
-		IsOnline:    isOnline,
-		MeetingLink: r.FormValue("meeting_link"),
+		IsOnline:    false,
+		MeetingLink: "",
 	}
 
 	// Insert the event
